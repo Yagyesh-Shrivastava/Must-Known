@@ -1,0 +1,77 @@
+Order Service
+
+CRUD 
+Config (POM.XML) - spring-boot-starter-web, JPA 
+application.properties - spring-datasource - jdbc details (username, password)
+1. Entity Class
+@Entity 
+public class OrderDetails{
+	private String orderId; 
+	private String orderName;
+	private String orderDesc;
+
+	//constructor
+	public OrderDetails(String orderId, String orderName, String orderDesc)
+	{
+		this.orderId = orderId;
+		this.orderName;
+		this.orderDesc;
+	}
+	
+	// getter and setter
+}
+
+
+2. Create a repository  class which will extend the JPA repository
+	@Repository
+	Public interface OrderItem extends JPA repository<OrderDetails, String>(){
+		public String findByID();
+		public String updateOrder(String ID);
+	}
+
+3. Create a service which implements Repository
+	@Service
+	public class  GetMyDetailsService implements OrderItem
+	{	
+		@AutoWired
+		private OrderItem orderItem;
+		//Create a constructor for Order Item. for Detpendecy Injection
+		@override
+		public String findById()
+		{
+			return orderDetails.findById();
+		}
+
+		@Override
+		pubic String updateOrder(String ID)
+		{
+			List<OrderDetails.Add(Id);
+		}
+
+	}
+
+4. Controller
+	@RestController -> @Configuration, @AutoEnbleConfiguration, @ComponentScan
+	@RequestMapping("/home")	-> Context Path from where the App starts (http://localhost/home)
+	Public class OrderController()
+	{
+		@Autowired -> Injecting the dependencies of the service
+		private GetMyDetailsService service; 
+		//create a constructor
+		public OrderController(GetMyDetailsService service)
+		{
+			this.service = service;
+		}
+		
+		@GetMapping("/id/{ID}") -> http://localhost/home/id?=id(5)
+		async public getId(String id)
+		{	
+			return service.findById(id); // if matches then return 200 status or 400
+		}
+
+		@PostMapping("/updateOrder")
+		public updateOrderById(String id)
+		{
+			return service.UpdateOrder(id);
+		}
+	}

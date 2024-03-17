@@ -1,0 +1,77 @@
+Cisco
+Vmware
+Salesforce
+Microsoft
+OCI
+Wells Fargo
+JP Morgan
+Goldman Sachs
+Intel
+SAP Labs
+Qualcomm
+Target
+Lowes
+Walmart
+Morgan Stanley
+American Express
+BNY Mellon
+Suno Logic
+Tesco
+Thompson Reuters
+UHG
+Fidelity Investments
+National Instruments
+Fractal Analytics
+GE
+Adobe
+NatWest group
+Flipkart 
+Nvidia
+PayPal
+Anarock
+BCG
+Intuit
+MasterCards
+Maersk
+VISA
+Texas Instruments
+Expedia
+FactSet
+ServiceNow
+NetApp
+Globant
+OpenText
+Juniper Networks
+AMD
+Nutanix
+IKEA
+Airbus
+Cadence 
+Sprinklr
+7/11
+Home Depot
+Teradata
+Rakuten
+McAfee
+Thales
+Backer Hughes
+Wayfair
+GoJek
+Couchbase
+Uber
+DE Shaw
+Yugabyte
+Deutsche Bank
+Atlassian 
+DP World
+Agoda
+Clumio
+Adobe
+Cohesity
+Autodesk
+Digicert
+Plivo
+Cimpress 
+Harness
+Boeing
+SAP Labs

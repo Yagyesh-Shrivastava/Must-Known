@@ -1,0 +1,112 @@
+::: Interview Questions Asked :::
+
+Mahindra Finance
+1. How you have enabled push notification.
+2. How you have designed Debit Card, How will you design for the CVV.
+3. How you authenticate the user. 
+4. What is DI
+5. Which DI is better among 3
+6. How to resolve the merge conflict. 
+7. What is JPA.
+8. You have Name(String), Mobile No(Starts with 6), ID(limit 5). How will you call the RESTapi for this?
+
+
+ISS
+1. Abstract class and Interface when to use it.
+2. Java is pass by val or ref
+3. Hooks in React
+4. Redux in React
+5. Can we add a method in Interface
+6. find 1 in list using stream api
+7. Internal working of hashmap
+8. remove duplicates in array with time complexities
+9. String Pool
+10.  public class Printer implements Runnable {
+ 
+public void doSomething() {
+	sop("hi" + Thread.currentThread().getName());
+}
+ 
+@Override
+public void run() {
+	sop("hello" + Thread.currentThread().getName());
+	doSomething();
+}
+}
+ 
+public class Main{
+public static void main(String[] args){
+	sop("hello" + Thread.currentThread().getName());
+ 
+	Printer p = new Printer();
+	p.run();
+ 
+	sop("hey" + Thread.currentThread().getName());
+ 
+}
+11. public class TestClass {
+public static void main(String[] args) {
+     someMethod(null);
+}
+
+
+public static void someMethod(Object o) {
+System.out.println("Object method Invoked");
+}
+
+
+public static void someMethod(String s) {
+System.out.println("String method Invoked");
+}
+}
+
+
+
+CloudBees
+1.  Responsibilites
+2.  Team Structure
+3.  How you Collaborate
+4.  If you have username and password visible in git how will you secure it
+5.  Why not created the obj of service class
+6.  Java persistence
+7.  How will handle the multiple clicks for the date change
+8.  Interviewee - yagyesh.shrivastava97@gmail.com
+    Without use of any date aware functions or classes write a method (pseudocode acceptable) called addDays that takes an integer number of days that will add the given number of days to            	the date. You can assume that the Gregorian calendar exists for all time and that there are no leap years.                      
+
+The date class is defined as:
+
+public class Date {
+       public int year;
+       public int month;
+       public int dayOfMonth;
+
+              
+       public Date(int year, int month, int dayOfMonth) {
+         this.year = year;
+         this.month = month;
+         this.dayOfMonth = dayOfMonth;
+       }
+     }
+
+
+9. How to change the app.properties for different env? Will it be shown in production. ? how to hide it. 
+10. Difference between restful api and api. 
+11. How to send the status of api. 
+
+
+
+Carlsoft
+1. [1,6,2,2,4,4,5,6,1] - find the no which is not in pair
+2. abcabcdbd - longest unique subString
+3. Symbol       Value
+	I             1
+	V             5
+	X             10
+4. ArrayList vs LinkedList
+5. HashMap vs HashTable
+6. Overloading vs Overriding
+7. Abstract and Interface
+8. Can have multiple interface and abstract method
+9. Can override main method
+10. Can overload main method.
+11. 

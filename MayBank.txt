@@ -1,0 +1,37 @@
+MayBank
+
+Do you have team leading experience?
+Yes, I have a proven track record of effectively leading teams in various projects, ensuring seamless collaboration and delivering successful outcomes.
+
+What is your experience in the banking domain?
+I bring significant expertise in the banking domain, having actively contributed to the development of COBE software solutions tailored to banking operations, including transaction processing and risk management.
+
+Do you have any experience in production support, and what is the level of experience (L2, L3)?
+Absolutely, I have valuable experience in production support, particularly at the L2 and L3 levels. My proactive approach to troubleshooting and resolving issues has consistently contributed to maintaining the reliability and availability of production environments.
+
+How comfortable are you with the design, architecture, and development cycle of the project?
+I am highly proficient in navigating the design, architecture, and development cycle of projects. My deep understanding of industry best practices ensures that projects are not only executed efficiently but also result in high-quality deliverables.
+
+What design patterns are used?
+Our projects leverage a variety of design patterns, including the widely acclaimed MVC, Singleton, Factory, and Observer patterns. These patterns are instrumental in ensuring scalable, maintainable, and robust software solutions.
+
+What software module is used? Is it agile or waterfall?
+We embrace an agile software development approach, utilizing cutting-edge modules such as Spring Boot for backend development and Angular/React for frontend development. This agile methodology enables us to adapt swiftly to evolving requirements and deliver value iteratively.
+
+Advantages and challenges faced in using Spring Boot?
+Spring Boot offers an array of benefits, including accelerated development, streamlined configuration, and enhanced dependency management. While challenges may arise in configuring auto-configuration behavior, I view them as opportunities to deepen my expertise and deliver even greater value.
+
+How do you stay updated with the latest software development?
+I prioritize continuous learning and remain abreast of the latest software development trends through active engagement with industry conferences, online courses, and professional networks. This proactive approach ensures that my skills and knowledge are always up-to-date.
+
+Do you use DevOps in your project? What are the advantages of DevOps?
+Yes, DevOps practices are integral to our project workflow, facilitating seamless collaboration, automation, and rapid delivery. The advantages of DevOps, such as shortened development cycles and improved deployment frequency, significantly enhance our project outcomes.
+
+Describe challenges or problems faced in the project and how do you resolve them?
+In tackling project challenges, I adopt a proactive and solution-oriented approach. For instance, when confronted with scalability issues due to increased user traffic, I spearheaded initiatives to optimize performance, implement caching mechanisms, and leverage containerization technologies to ensure seamless scalability.
+
+How many years of experience do you have in API & Spring Boot?
+With several years of hands-on experience in API development using Spring Boot, I have honed my expertise in designing and implementing robust and scalable APIs that serve as the backbone of our software solutions.
+
+When was the last time you used Spring Boot?
+I recently utilized Spring Boot in a project completed within the past few months. Its versatility and efficiency were instrumental in driving the successful development of microservices-based backend systems, underscoring its ongoing relevance and utility in modern software development.

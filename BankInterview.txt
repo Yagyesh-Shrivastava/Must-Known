@@ -1,0 +1,303 @@
+JP Morgan & Chase
+1) Immutablity of a class(Show an example in IDE)
+	make variable as final and no setter
+2) How will you sort a salary of an Employee?
+(Show in IDE)
+	class Employee implements Comparable<Employee> {
+	    String name;
+	    Integer salary;
+	    Date JoiningDate;
+ 
+	    public Employee() {
+	    }
+ 
+	    public Employee(String n, Integer f, Date d) {
+	           name = n;
+	           salary = f;
+	           JoiningDate = d;
+	    }
+ 
+ 
+	    public int compareTo(Employee o) {
+	           return this.name.compareTo(o.name) + (this.salary.compareTo(o.salary))
+	                        + (this.JoiningDate.compareTo(o.JoiningDate));
+	    }
+	}
+ 
+	public class SortEmployeeOnBasisOfNameSalaryDate {
+ 
+	    public static void main(String[] args) {
+ 
+	           Employee emp1 = new Employee("ank", 2000, new Date(2016 - 1900, 11, 14));
+	           Employee emp2 = new Employee("dav", 500, new Date(2016 - 1900, 11, 23));
+	           Employee emp3 = new Employee("ank", 1000, new Date(2016 - 1900, 11, 22));
+	           Employee emp4 = new Employee("sam", 9000, new Date(2016 - 1900, 11, 29));
+	           Employee emp5 = new Employee("ank", 1000, new Date(2016 - 1900, 11, 19));
+ 
+	           List<Employee> l = new ArrayList<Employee>();
+	           l.add(emp1);
+	           l.add(emp2);
+	           l.add(emp3);
+	           l.add(emp4);
+	           l.add(emp5);
+ 
+	           Collections.sort(l); // SORT
+ 
+	           System.out.println(l); // Display list
+ 
+	    }
+
+3) Once Sort Remove the 4th Highest Salary of an Employee?
+	(Show in IDE)
+
+
+4) What are Generics?
+5) Are you aware about the Design Pattern?
+(if yes then explain )
+
+6)What is Multithreading, How you used that in your project?
+	Java has great support for multithreaded applications. Java supports multithreading 	through Thread class
+	Multithreading is a programming concept in which the application can create a small unit of tasks to execute in parallel. If you are working on a computer, it runs multiple 	applications and allocates processing power to them. A simple program runs in sequence and the code statements execute one by one. This is a single-threaded application. But, if 	the programming language supports creating multiple threads and passes them to the operating system to run in parallel, it’s called multithreading.
+	
+	We can create Threads by either implementing Runnable interface or by extending 	Thread Class.
+
+	Thread t = new Thread(new Runnable(){
+	    @Override
+	    public void run() {
+	    }
+	});
+	Above is a one-line statement to create a new Thread. Here we are creating a Runnable as an anonymous class. If you are familiar with lambda expressions, we can create a Thread 	with much shorter code.
+
+	Runnable runnable = () -> System.out.println("Hello");
+	Once we have created a Thread, we have to start its execution by calling the start() method.
+
+	runnable.start();
+
+7) What are Concurrent HashMap?
+	If we try to modify the collection while iterating over it, we get ConcurrentModificationException. Java 1.5 introduced Concurrent classes in the java.util.concurrent package to 	overcome this scenario. ConcurrentHashMap is the Map implementation that allows us to modify the Map while iteration. The ConcurrentHashMap operations are thread-safe. 	ConcurrentHashMap doesn’t allow null for keys and values.
+
+	public class ConcurrentHashMapExample {
+
+		public static void main(String[] args) {
+
+			//ConcurrentHashMap
+			Map<String,String> myMap = new ConcurrentHashMap<String,String>();
+			myMap.put("1", "1");
+			myMap.put("2", "1");
+			myMap.put("3", "1");
+			myMap.put("4", "1");
+			myMap.put("5", "1");
+			myMap.put("6", "1");
+			System.out.println("ConcurrentHashMap before iterator: "+myMap);
+			Iterator<String> it = myMap.keySet().iterator();
+
+			while(it.hasNext()){
+				String key = it.next();
+				if(key.equals("3")) myMap.put(key+"new", "new3");
+			}
+			System.out.println("ConcurrentHashMap after iterator: "+myMap);
+	
+			//HashMap
+			myMap = new HashMap<String,String>();
+			myMap.put("1", "1");
+			myMap.put("2", "1");
+			myMap.put("3", "1");
+			myMap.put("4", "1");
+			myMap.put("5", "1");
+			myMap.put("6", "1");
+			System.out.println("HashMap before iterator: "+myMap);
+			Iterator<String> it1 = myMap.keySet().iterator();
+
+			while(it1.hasNext()){
+				String key = it1.next();
+				if(key.equals("3")) myMap.put(key+"new", "new3"); //throw error. fail fast error
+			}
+			System.out.println("HashMap after iterator: "+myMap);
+		}
+
+	}	
+
+
+8) What are HashMap?
+
+9) Design Singleton class ? prevent it from reflection, cloning, serialization
+10) Explain OOPS concepts . rules of overriding.
+11) Implementation internal of HashMap ? explain in detail about hashing
+12) difference b/w interface and abstract class ? when to use what ?
+	abstract keyword is used to create an abstract class and it can be used with methods also whereas interface keyword is used to create interface and it can’t be used with methods.
+	Subclasses use extends keyword to extend an abstract class and they need to provide implementation of all the declared methods in the abstract class unless the subclass is also an 	abstract class whereas subclasses use implements keyword to implement interfaces and should provide implementation for all the methods declared in the interface.
+	Abstract classes can have methods with implementation whereas interface provides absolute abstraction and can’t have any method implementations. Note that from Java 8 onwards, we 	can create default and static methods in interface that contains the method implementations.
+	Abstract classes can have constructors but interfaces can’t have constructors.
+	Abstract class have all the features of a normal java class except that we can’t instantiate it. We can use abstract keyword to make a class abstract but interfaces are a 	completely different type and can have only public static final constants and method declarations.
+	Abstract classes methods can have access modifiers as public, private, protected, static but interface methods are implicitly public and abstract, we can’t use any other access 	modifiers with interface methods.
+	A subclass can extend only one abstract class but it can implement multiple interfaces.
+	Abstract classes can extend other class and implement interfaces but interface can only extend other interfaces.
+	We can run an abstract class if it has main() method but we can’t run an interface because they can’t have main method implementation.
+	Interfaces are used to define contract for the subclasses whereas abstract class also define contract but it can provide other methods implementations for subclasses to use.
+ 
+13) write sql query to get employee name with manager
+	SELECT E.first_name AS "Employee Name", (SELECT M.first_name FROM employees M WHERE M.employee_id = E.manager_id) AS "Manager"
+	FROM employees E;
+
+--------------------------------------------------------------------------------------
+
+
+1. What are the issue might appear in multithreading?
+	Typically, the first step in developing a concurrent algorithm is to break down the original problem into smaller chunks that a thread can solve as independently from the other 	threads as possible.
+
+	However, in reality, the threads and processes of a parallel program compete for the limited shared resources of a computer. In addition, some resources are even more scarce: for 	example, a single file on a hard disk. While all threads can read a file without worrying about data consistency, only a single thread can write to the file. In addition, many 	algorithms have a strict, predetermined order in which the threads must execute the involved steps. When a program contains multiple threads, some of them may need to wait for the 	other threads to finish before they can proceed to work on the next step of the algorithm.
+
+	Therefore, the two main problems in multi-threaded programming are managing the concurrent access problem and ensuring that all threads execute a given sequence in the correct 	order.
+
+
+2. Concurrent Hashmap how it works? why is better than synchronised block?
+	ConcurrentHashMap is a thread-safe implementation of the Map interface. It uses a lock-free algorithm to allow multiple threads to concurrently read and write to the map without 	the need for synchronization. This makes it a very efficient data structure for use in multithreaded applications.
+	ConcurrentHashMap is better than synchronized blocks because it allows multiple threads to access the map concurrently without blocking each other. This is because 	ConcurrentHashMap uses a lock-free algorithm, which means that it does not need to acquire a lock before accessing the map. This makes it much more efficient than synchronized 	blocks, which can only be accessed by one thread at a time.
+	Here are some of the key features of ConcurrentHashMap:
+	It is a thread-safe implementation of the Map interface.
+	It uses a lock-free algorithm to allow multiple threads to concurrently read and write to the map without the need for synchronization.
+	It is very efficient for use in multithreaded applications.
+	It is scalable to a large number of threads.
+	It is easy to use.
+
+
+3. how to achieve locking? difference between lock and shynchronised
+	A lock may be a more flexible and complicated thread synchronization mechanism than the standard synchronized block. A lock may be a tool for controlling access to a shared 	resource by multiple threads. Commonly, a lock provides exclusive access to a shared resource: just one thread at a time can acquire the lock and everyone accesses to the shared 	resource requires that the lock be acquired first. However, some locks may allow concurrent access to a shared resource, like the read lock of a ReadWriteLock.
+
+	// Example of lock interface
+	Lock lock = new ReentrantLock();
+	lock.lock();
+ 
+	// critical section 
+	lock.unlock();
+
+
+4. Design patterns related questions ( example of various design pattern)
+6. how to optimise a query if you find out its slow?
+	Use column names instead of SELECT : * This can save database resources.
+	Use JOINs instead of subqueries: Subqueries can slow down query performance, especially when used in the WHERE or HAVING clauses.
+	Use IN predicate when querying indexed columns: This can help speed up data modifications without affecting data retrieval.
+	Use wildcards at the end of a phrase only: Wildcards can be added at the beginning or end of words and phrases.
+	Use WHERE instead of HAVING to define filters: This can help speed up data modifications without affecting data retrieval.
+	Use appropriate indexes: This can help the database replace long sequential scans with equivalent operations that use indexes.
+	Avoid blocking operations: This can help reduce the query processing time and improve overall system performance.
+	Use suitable data types: This can help reduce the query processing time and improve overall system performance. 
+
+
+7. difference between arraylist and linkedlist, which one is better?
+	ArrayList	LinkedList
+	1) ArrayList internally uses a dynamic array to store the elements.	LinkedList internally uses a doubly linked list to store the elements.
+	2) Manipulation with ArrayList is slow because it internally uses an array. If any element is removed from the array, all the other elements are shifted in memory.	Manipulation 	with LinkedList is faster than ArrayList because it uses a doubly linked list, so no bit shifting is required in memory.
+	3) An ArrayList class can act as a list only because it implements List only.	LinkedList class can act as a list and queue both because it implements List and Deque interfaces.
+	4) ArrayList is better for storing and accessing data.	LinkedList is better for manipulating data.
+	5) The memory location for the elements of an ArrayList is contiguous.	The location for the elements of a linked list is not contagious.
+	6) Generally, when an ArrayList is initialized, a default capacity of 10 is assigned to the ArrayList.	There is no case of default capacity in a LinkedList. In LinkedList, an 	empty list is created when a LinkedList is initialized.
+	7) To be precise, an ArrayList is a resizable array.	LinkedList implements the doubly linked list of the list interface.
+
+
+8. Gave me a scenario and asked me how to solve this?
+9. Different Joins in SQL.
+
+
+11. S.O.L.I.D principle with examples.
+	
+The SOLID principles are a set of design principles intended to guide developers to create more maintainable, flexible, and scalable software systems. Each letter in "SOLID" represents one of the principles:
+
+Single Responsibility Principle (SRP):
+
+A class should have only one reason to change, meaning it should have only one responsibility.
+Example: Consider a class Employee that handles both employee information management and salary calculation. Applying SRP, we can split it into two classes: EmployeeInformationManager and SalaryCalculator, each responsible for a single task.
+Open/Closed Principle (OCP):
+
+Software entities (classes, modules, functions) should be open for extension but closed for modification.
+Example: Instead of directly modifying the code of a Shape class to add new shapes, we can create an interface Shape and implement different shapes like Circle and Square. If we want to add a new shape like Triangle, we can create a new class implementing the Shape interface without modifying the existing code.
+Liskov Substitution Principle (LSP):
+
+Subtypes should be substitutable for their base types without altering the correctness of the program.
+Example: If we have a base class Bird and subclasses Duck and Penguin, both should be able to substitute the Bird base class without breaking the program's behavior. So, if Bird has a method fly(), both Duck and Penguin should implement it appropriately.
+Interface Segregation Principle (ISP):
+
+Clients should not be forced to depend on interfaces they do not use.
+Example: Suppose we have an Animal interface with methods walk(), fly(), and swim(). If a client only needs to work with walking animals, it shouldn't be forced to implement fly() and swim(). We can split the Animal interface into WalkingAnimal, FlyingAnimal, and SwimmingAnimal interfaces.
+Dependency Inversion Principle (DIP):
+
+High-level modules should not depend on low-level modules. Both should depend on abstractions.
+Abstractions should not depend on details. Details should depend on abstractions.
+Example: Instead of a high-level module depending directly on a low-level module, they should depend on abstractions. For instance, in a messaging system, instead of directly depending on a specific messaging service implementation, we can introduce an interface MessageService and have the high-level module depend on that interface. Different messaging service implementations can then be created without modifying the high-level module.
+
+
+---------------------------------------------------------------------
+
+1. Difference between Encapsulation and abstraction	
+	Abstraction
+	Abstraction is a way of hiding the implementation details of an object and exposing only its essential features.
+	Abstraction is achieved by using abstract classes and interfaces.
+	Abstraction is used to simplify the design of a program by making it easier to understand and use.
+	An example of abstraction is a car. A car driver does not need to know how the car engine works in order to drive the car. The driver only needs to know how to operate the controls 	of the car, such as the steering wheel, accelerator, and brake.
+	
+	Encapsulation
+	Encapsulation is a way of bundling data and methods together into a single unit, called a class.
+	Encapsulation is achieved by using access modifiers to control access to the data and methods of a class.
+	Encapsulation is used to protect the data and methods of a class from being accidentally modified or corrupted.
+	An example of encapsulation is a bank account. A bank account holder does not need to know how the bank account system works in order to deposit or withdraw money from their 	account. The account holder only needs to know how to use the bank account system, such as the account number and PIN.
+
+
+2. what is static used for can we override static method
+	The short answer is No. Static methods in Java cannot be overridden. This is because static methods are not associated with the instance of a class, but with the class itself. 	Therefore, when a subclass inherits a static method from its parent class, it cannot modify the behavior of the static method in any way.
+
+
+3. hash code and equals
+4. difference between arraylist and linkedlist
+5. threads and synchronization questions on them how I tried to explain they r telling I dont know just saying from book. so losted interest to try
+streams why streams. I tried still endup hearing the bookish knowledge but really I worked on it try to write and give a example but they asked about predicate and consumer structure but I have not used it so even though I say wat I read they endup saying am saying from book so said yeah I dont know
+6. annotations in spring boot and y spring boot if had spring
+---------------------------------------------------------------------------------------
+
+1. How hash map works internally?
+
+2. can we run Class in Java 1.4 which was compiled in java 1.5?	
+	If you just build with the defaults of javac 1.6, your class files will not work on old versions of Java.
+
+The best way to compile for older Java is just to use the older JDK releases.
+
+
+singleton design pattern?
+difference between Java singleton and spring singleton?
+Java singleton
+	The singleton pattern is a design pattern that restricts the instantiation of a class to one object. This is useful when exactly one object is needed to coordinate actions across 	the system. The singleton pattern can be implemented in Java by creating a private constructor and a static method that returns the one instance of the class.
+	Spring singleton
+	Spring is a Java framework that provides a comprehensive infrastructure for developing enterprise applications. Spring provides a number of features that make it easier to develop 	and deploy applications, including dependency injection, aspect-oriented programming, and transaction management.	
+	Spring also provides a number of bean scopes, which control the lifecycle of beans. The singleton scope is the default scope in Spring. When a bean is defined with the singleton 	scope, Spring will create exactly one instance of the bean and store it in a cache. All subsequent requests for the bean will return the cached instance.
+
+Comparison
+	The main difference between a Java singleton and a Spring singleton is that a Java singleton is scoped to the classloader, while a Spring singleton is scoped to the application 	context. This means that a Java singleton can only be accessed by code that is loaded by the same classloader, while a Spring singleton can be accessed by code that is loaded by 	any classloader.
+	Another difference between Java singletons and Spring singletons is that Spring singletons are managed by the Spring container. This means that Spring will automatically create and 	destroy Spring singletons as needed. Java singletons, on the other hand, must be manually created and destroyed.	
+	Conclusion
+	Java singletons and Spring singletons are both useful for creating objects that need to be shared across an application. However, Spring singletons are easier to use and manage 	than Java singletons. Spring singletons are also more flexible, as they can be accessed by code that is loaded by any classloader.
+
+Class Loader:
+
+A class loader is responsible for dynamically loading Java classes into the Java Virtual Machine (JVM) at runtime.
+It locates and loads class files from various sources such as the file system, network, or other custom locations.
+Java class loaders follow a delegation hierarchy to search for classes. If a class is not found by one class loader, it delegates the search to its parent class loader, and so on until the bootstrap class loader is reached.
+Class loaders are crucial for dynamic class loading, which is essential in scenarios such as plug-in architectures, application servers, and frameworks like OSGi.
+Custom class loaders can be created by extending the ClassLoader class to load classes from non-standard sources or apply custom logic during the loading process.
+ApplicationContext (from Spring Framework):
+
+ApplicationContext is a container responsible for managing beans (components) in a Spring application.
+It provides advanced features like dependency injection, lifecycle management, AOP (Aspect-Oriented Programming), and more.
+ApplicationContext loads bean definitions from various sources such as XML files, Java configuration classes, and annotations.
+It instantiates and manages bean instances, resolving dependencies between them.
+ApplicationContext supports features like internationalization, event propagation, resource loading, and environment awareness.
+Spring offers several implementations of ApplicationContext, such as AnnotationConfigApplicationContext, ClassPathXmlApplicationContext, and FileSystemXmlApplicationContext, catering to different configuration styles and environments.
+In summary, while both class loader and ApplicationContext deal with loading resources into a Java application, they serve distinct purposes: class loader deals with loading Java classes dynamically at runtime, while ApplicationContext is a container for managing beans and providing advanced features for dependency injection and application configuration in Spring applications.
+
+
+
+
+
+
+HireVue test questuon
+1. Write a program that finds the longest common suffix between two string.
+2. Write a program that, given an integer, insert a ‘*’ between adjacent digits that are even and ‘-‘ between adjacent digits that are both odd. Zero should not be considered even or odd.
+Input 12467930 ouput 12*4*67-9-30

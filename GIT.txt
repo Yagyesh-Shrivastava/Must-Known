@@ -1,0 +1,163 @@
+GIT
+
+1. Diff b/w Git and GitHub
+Git is a version control system that allows developers to track changes in their code. GitHub is a web-based hosting service for git repositories. In simple terms, you can use git without Github, but you cannot use GitHub without Git.
+
+2. Repo vs Branch in git?
+Repository
+A repository, or repo, is a collection of files and directories that are tracked by Git. It is a central storage location for managing and tracking changes in files and directories. A repository can contain multiple branches, which means there are multiple versions of the repository.
+Branch
+A branch is a version of your repository, or in other words, an independent line of development. A repository can contain multiple branches, which means there are multiple versions of the repository. Branches are useful for making changes to a project without affecting the main codebase.
+
+3. Git push and Pull
+Git Push
+Used to upload local repository content to a remote repository.
+After a local repository has been modified, a push is executed to share the modifications with remote team members.
+Git Pull
+Used to fetch and merge changes from the remote repository to the local repository.
+The pull command is a combination of two commands: git fetch command followed by git merge command.
+
+4. Git pull and fetch?
+The primary difference between git fetch and git pull is that git pull not only downloads the most recent changes from a remote repository, but also merges them into your working directory. Git fetch, on the other hand, solely downloads the most recent changes without merging them into your working directory.
+
+5. git clone and git remote
+They are two completely different things. git remote is used to refer to a remote repository or your central repository. git clone is used to copy or clone a different repository
+
+6. Diff and status
+While git status only tells you the state of your file changes, git diff tells you the exact changes. You can use git diff to compare your changes before staging or committing them. You can also use this command with the --color-words flag to highlight changes in a visual manner
+
+7. git merge and rebase
+The main difference between git merge and git rebase is that git merge is a way of combining changes from one branch (source branch) into another branch (target branch) where as git rebase is a way of moving the changes from one branch onto another branch
+
+8. how to create a git repo
+Create a new folder for your project.
+Open the folder in Git BASH.
+Issue the git init command to create the new Git repo.
+Add files and folders to your project.
+Routinely stage files and create commits.
+
+9. How to fix broken commit. 
+The usual thing is to use git commit --amend to replace the commit, then git rebase --continue to let Git continue with the rebase operation. However, you could also insert further commits, perhaps splitting the original changes up into several smaller commits.
+
+10. What happens when .git directory gets deleted. 
+If we delete the . git folder, the information saved by Git will be lost, and the directory will no longer act as a Git repository.
+
+11. use of statging and indexing in git
+The Git index is a critical data structure in Git. It serves as the “staging area” between the files you have on your filesystem and your commit history. When you run git add , the files from your working directory are hashed and stored as objects in the index, leading them to be “staged changes”
+
+12. different git repo hosting functions
+
+
+Common Function
+1. what is VCS?
+VCS stands for Version Control System. It is a system that records changes to a file or set of files over time so that you can recall specific versions later. VCS is also known as source control.
+VCSs are used to track changes to files, such as source code, documentation, and images. They can also be used to track changes to entire projects. VCSs make it easy to collaborate with other developers, and they can help you to revert to a previous version of a file or project if necessary.
+
+2. Advantages and feature of GIT
+One of the biggest advantages of Git is its branching capabilities. Unlike centralized version control systems, Git branches are cheap and easy to merge. This facilitates the feature branch workflow popular with many Git users. Feature branches provide an isolated environment for every change to your codebase.
+
+3. Git vs SVN?
+4. git config do?
+The git config command is used to set and get configuration values for Git. It can be used to set global, local, or system-wide configuration values. Global configuration values apply to all Git repositories on the system, local configuration values apply to the current repository, and system-wide configuration values apply to all users on the system.
+The git config command can also be used to list all configuration values or to get the value of a specific configuration variable.
+
+5. functionality if git Is-tree
+The git-is-tree command is used to check if a given object is a tree object. A tree object in Git is a data structure that records a directory tree or sub-tree. It stores the names and hashes of all the files and subdirectories in the tree, as well as the permissions for each file.
+The git-is-tree command takes a single argument, which is the hash of the object to be checked. If the object is a tree object, the command will exit with a status code of 0. Otherwise, the command will exit with a status code of 1.
+
+6. git stash? git stash pop, drop?
+7. git annotate command do 
+8. git cherry pick
+9. Gi revert and git reset
+You can also think of git revert as a tool for undoing committed changes, while git reset HEAD is for undoing uncommitted changes. Like git checkout , git revert has the potential to overwrite files in the working directory, so it will ask you to commit or stash changes that would be lost during the revert operation.
+
+10. Commit message?
+11. What do you mean by head in terms of Git and also tell the number of heads that can be           present in a repo?
+
+
+Advanced 
+1. How to revert bad commit which is already pushed?
+Go to the Git history.
+Right click on the commit you want to revert.
+Select revert commit.
+Make sure commit the changes is checked.
+Click revert.
+
+2. recover a deleted branch. 
+Open the repository in GitHub where the branch was deleted.
+Click on the "Code" tab to view the repository's code.
+In the dropdown menu next to the branch selector, click on the branch selector and select the branch that was deleted.
+Click on the "Restore branch" button.
+
+3. how to resolve conflict in Git. 
+Identify the source of the conflict. This can be done by looking at the diff of the two branches that you are trying to merge.
+Once you have identified the source of the conflict, you can use the "git mergetool" command to open a merge tool. This will allow you to visually compare the two versions of the file and choose which changes to keep.
+After you have resolved the conflict, you can use the "git add" command to add the resolved file to the index.
+Finally, you can use the "git commit" command to commit the merged changes.
+
+
+Commands
+1. to setup username and email
+	git config --global user.name "Your Name"
+	git config --global user.email "your_email@example.com"
+
+2. initialize a git repo
+	git init
+
+3. add particular/ many in staging area in git
+	git add <file1> <file2> ...
+
+4. commit changes with a msg in git
+	git commit -m "Your commit message"
+
+5. see your commit history in git
+	git log
+
+6. New brach in git
+	git branch <branch_name>
+
+7. switch to another branch in git
+	git checkout <branch_name>
+
+8. list all branches in git
+	git branch
+
+9. create a branch in git and switch to it immediately
+	git checkout -b <branch_name>
+
+10. delete a branch
+	git branch -d <branch_name>
+
+11. merge two branches in git
+	git merge <branch_name>
+
+12. abort the conflicting merge in git
+	git merge --abort
+
+13. push and pull the changes in git
+	git push
+	git pull
+
+14. check the remote branches that git is tracking
+	git remote show origin
+	
+15. fetch the remote repository changes in git
+	git fetch
+
+16. force a push request in git
+	git push -f
+
+17. add a repository in git
+	git remote add origin <remote_repository_url>
+
+18. rename files in git
+	git mv <old_filename> <new_filename>
+
+19. ignore files in list
+	Create or edit .gitignore file and add filenames/patterns to ignore.
+
+20. to remove tracked files from current working tree in git
+	git rm --cached <file>
+
+21. rollback the last commit in git. 
+	git reset --soft HEAD^

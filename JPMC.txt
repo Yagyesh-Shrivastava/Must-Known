@@ -1,0 +1,680 @@
+1. what is singleton and how to design singleton class in java.	
+	In Java, a Singleton is a design pattern that ensures a class has only one instance and provides a global point of access to that instance. It is commonly used in scenarios where there's a need for a single instance to coordinate actions across the system, such as managing resources, configurations, or database connections.
+
+To design a Singleton class in Java, you typically follow these steps:
+
+Make the constructor private: This prevents other classes from instantiating the Singleton class directly.
+
+Provide a static method to get the instance: This method ensures that there's only one instance of the class, and it's accessible globally.
+
+Create a static variable to hold the single instance: This variable should be private and static, ensuring that it's shared among all instances of the class.
+
+Initialize the instance lazily (optional): You might choose to create the instance only when it's requested for the first time, rather than eagerly creating it when the class is loaded.
+
+Here's a basic implementation of a Singleton class in Java:
+
+java
+Copy code
+public class Singleton {
+    // Private static variable to hold the single instance
+    private static Singleton instance;
+    
+    // Private constructor to prevent instantiation from outside
+    private Singleton() {
+        // Constructor logic, if needed
+    }
+    
+    // Static method to get the instance
+    public static Singleton getInstance() {
+        // Lazy initialization: create the instance if it doesn't exist yet
+        if (instance == null) {
+            instance = new Singleton();
+        }
+        return instance;
+    }
+    
+    // Other methods and variables of the Singleton class
+}
+In this implementation, the Singleton class has a private constructor, preventing other classes from creating instances of it directly. The getInstance() method is used to obtain the single instance of the class. It initializes the instance lazily, meaning it creates the instance only when getInstance() is called for the first time. Subsequent calls to getInstance() return the same instance.
+
+However, note that this basic implementation of a Singleton is not thread-safe. In a multithreaded environment, multiple threads might concurrently access the getInstance() method and create multiple instances. To make the Singleton thread-safe, you can use various approaches such as using synchronized blocks, double-checked locking, or using the java.util.concurrent.atomic.AtomicReference class.
+
+
+
+
+
+
+
+2. How to test using Junit if it is singleton. What will be the validation.
+Testing whether a class is implemented as a Singleton using JUnit involves verifying that no matter how many times you call the getInstance() method, you always get the same instance. Additionally, you might want to ensure that no other instances of the class can be created. Here's how you can write tests for a Singleton class using JUnit:
+
+java
+Copy code
+import static org.junit.Assert.assertSame;
+import org.junit.Test;
+
+public class SingletonTest {
+    
+    @Test
+    public void testSingletonInstance() {
+        // Get the instance multiple times
+        Singleton instance1 = Singleton.getInstance();
+        Singleton instance2 = Singleton.getInstance();
+        
+        // Verify that both instances are the same
+        assertSame(instance1, instance2);
+    }
+    
+    @Test
+    public void testNoOtherInstances() {
+        // Create a new instance directly using the constructor (which is private)
+        Singleton instance = new Singleton(); // This line should cause a compilation error
+        
+        // The line above should not compile, but if it does, fail the test
+        // Fail the test if execution reaches here
+        assert false : "Should not be able to create another instance";
+    }
+}
+In this example, the testSingletonInstance() method checks that the same instance is returned every time getInstance() is called. The assertSame() method from JUnit is used to compare the references of the two instances. If they are the same, it means the Singleton pattern is correctly implemented.
+
+The testNoOtherInstances() method checks that no other instances of the Singleton class can be created. It tries to create a new instance directly using the constructor, which should fail to compile since the constructor is private. If the code compiles, it means the Singleton pattern is not implemented correctly, and the test fails.
+
+By running these tests, you can verify whether your class behaves as a Singleton as expected. If the tests pass, it indicates that the class is implemented as a Singleton, ensuring that only one instance is created and that it's accessible globally.
+
+
+3. if you want to check the object which one to use '==' or isEquals()
+In most programming languages, including Java, you typically use == to check for equality between objects. However, it's important to understand the difference between == and equals().
+
+== is an operator used to compare the memory addresses of two objects. It checks whether two object references point to the same memory location, i.e., it checks for reference equality.
+
+equals() is a method defined in the Object class, which is overridden by subclasses to provide their own definition of equality. By default, equals() method in the Object class simply checks for reference equality, similar to the == operator. However, many classes override this method to compare the contents of the objects they represent rather than their memory addresses.
+
+So, if you want to check whether two objects contain the same values, you should use the equals() method. For example:
+
+java
+Copy code
+Object obj1 = new Object();
+Object obj2 = new Object();
+
+if (obj1.equals(obj2)) {
+    // Do something
+}
+If you want to check whether two object references point to the same memory location, you can use the == operator:
+
+java
+Copy code
+Object obj1 = new Object();
+Object obj2 = obj1;
+
+if (obj1 == obj2) {
+    // Do something
+}
+It's important to note that the behavior of equals() can be overridden by classes to define custom equality semantics, while == checks for reference equality by default. So, depending on what you're trying to achieve, you should choose the appropriate one.
+
+
+
+
+
+
+4. which DS to use for uniqueness and maintain the insertion order in collections
+	LinkedHashSet<>
+
+5. In HashMap I have Employee and Employee key in this I have overridden the equals method but not the HashCode what will happen ? on the performance and will it behave properly
+
+	If you override equals() but not hashCode(), it can lead to unexpected behavior in 	collections like HashMap. Specifically, it can lead to the following issues:
+
+	Performance: Since HashMap relies on hash codes to distribute elements across 	buckets, if you don't override hashCode(), the default hashCode() method provided 	by the 	Object class will be used. This method generates hash codes based on the 	memory addresses of objects. As a result, objects that are considered equal 	(according to your 	overridden equals() method) might end up in different buckets if 	their hash codes are different. This can degrade the performance of HashMap 	operations such as retrieval 	and insertion.
+
+	Correctness: If equals() and hashCode() are not consistent, it can lead to 	unexpected behavior. For example, you might not be able to retrieve an object from 	the HashMap 	using a key that you believe to be equal to the one stored in the map.
+
+	To ensure proper behavior and performance, it's crucial to override both equals() 	and hashCode() methods whenever necessary. You should make sure that hashCode() 	generates consistent hash codes for objects that are considered equal according to 	your equals() method. This will ensure that objects are properly distributed across 	buckets in hash-based collections like HashMap, and operations on these collections 	behave as expected.
+
+
+
+6. what is the default hashcode returend by the object class. 
+	
+	The default hashCode() method provided by the Object class in Java returns a memory address-based hash code for the object. Specifically, it returns the integer representation of 	the memory address where the object is stored in memory.
+
+	However, it's important to note that the actual behavior of the default hashCode() method may vary across different Java virtual machine (JVM) implementations and may not 	necessarily return the memory address. The hash code generated by the default hashCode() method is not guaranteed to be unique across different executions of the program or even 	different instances of the same class.
+
+	Because of this variability and lack of predictability, it's generally recommended to override the hashCode() method in your classes whenever you override the equals() method, 	ensuring that the hashCode() method generates hash codes that are consistent with the equals method. This ensures proper behavior when using objects in collections like HashMap or 	HashSet.
+
+
+7. what if the equals is not overriden and hashcode is what will happen. 
+8. Immutable class in java
+	An immutable class in Java is a class whose instances cannot be modified after they are created. Once an immutable object is created, its state remains constant throughout its lifetime. This means that immutable objects have the following characteristics:
+
+State: The state of an immutable object is set during its creation and cannot be modified afterwards.
+
+Fields: All fields of an immutable class should be final, so they cannot be reassigned once initialized.
+
+Mutator Methods: Immutable classes typically do not provide any methods that modify the state of the object. Instead, they often provide methods that return a new instance with modified state.
+
+Thread Safety: Immutable objects are inherently thread-safe because they cannot be modified after creation. Thus, multiple threads can safely access and share immutable objects without the risk of concurrent modification.
+
+Hash Code and Equals: Immutable classes should override hashCode() and equals() methods to ensure correct behavior when used in collections or comparisons.
+
+Example of an immutable class in Java:
+
+java
+Copy code
+public final class ImmutableClass {
+    private final int value;
+
+    public ImmutableClass(int value) {
+        this.value = value;
+    }
+//In summary, while marking the class and fields as final is crucial for creating immutable classes, marking the constructor as final doesn't provide any significant benefit in terms of immutability guarantees and is therefore not necessary.
+
+
+    public int getValue() {
+        return value;
+    }
+
+    public ImmutableClass add(int n) {
+        return new ImmutableClass(this.value + n);
+    }
+    
+    // Override hashCode() and equals() methods
+    @Override
+    public int hashCode() {
+        return Objects.hash(value);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null || getClass() != obj.getClass())
+            return false;
+        ImmutableClass other = (ImmutableClass) obj;
+        return value == other.value;
+    }
+}
+
+
+
+9. public static synchronized() and public synchornized() what will happen if 2 thread T1 and T2 are trying to access these 2 methods. 
+public static synchronized():
+
+If a method is declared as public static synchronized(), it means that the synchronization is applied at the class level. This means that the lock obtained is on the class object itself, not on any instance of the class.
+
+When thread T1 tries to access this method, it will acquire the lock on the class object, preventing any other thread from accessing any public static synchronized() method of the same class concurrently. This includes other static synchronized methods of the same class.
+
+When thread T2 tries to access any public static synchronized() method of the same class while T1 holds the lock, it will be blocked until T1 releases the lock.
+
+If thread T1 is executing a public static synchronized() method and thread T2 tries to access a non-static synchronized method of the same class, T2 will not be blocked because non-static synchronized methods use a different lock (the instance lock) than static synchronized methods.
+
+public synchronized():
+
+If a method is declared as public synchronized(), it means that the synchronization is applied at the instance level. This means that the lock obtained is on the instance of the class on which the method is being called.
+
+When thread T1 tries to access this method on an instance, it will acquire the lock on that instance, preventing any other thread from accessing any other synchronized methods of the same instance concurrently.
+
+When thread T2 tries to access any synchronized method of the same instance while T1 holds the lock, it will be blocked until T1 releases the lock.
+
+If thread T1 is executing a public synchronized() method on an instance and thread T2 tries to access a public static synchronized() method of the same class, T2 will not be blocked because static synchronized methods use a different lock (the class lock) than non-static synchronized methods.
+
+In summary, both public static synchronized() and public synchronized() methods use locks to provide thread safety, but the scope of the lock differs. The former locks at the class level, while the latter locks at the instance level.
+
+
+10. ThreadPool and Exectutor.
+	In Java, ThreadPoolExecutor is a class that implements the ExecutorService interface, which provides a flexible and efficient framework for executing tasks asynchronously using a pool of threads.
+
+Here's a breakdown of each:
+
+ThreadPool:
+
+A thread pool is a collection of worker threads that are managed by a thread pool manager. Instead of creating a new thread for each task, a thread pool maintains a pool of reusable threads that can be used to execute tasks concurrently.
+
+Thread pools are used to improve the performance and efficiency of applications by reducing the overhead of creating and destroying threads, especially for short-lived tasks or tasks that are executed frequently.
+
+Thread pools typically have a fixed number of threads, which are created when the pool is initialized, and these threads are reused to execute multiple tasks.
+
+Executor:
+
+Executor is an interface in Java that represents an object capable of executing tasks asynchronously. It provides a simple and standardized way to decouple task submission from task execution.
+
+Executors provide methods for submitting tasks for execution, either individually or in groups, and manage the execution of these tasks using underlying thread pools or other strategies.
+
+Executors abstract away the details of thread management and provide a higher-level API for task execution, making it easier to write concurrent and parallel applications.
+
+ThreadPoolExecutor:
+
+ThreadPoolExecutor is a concrete implementation of the ExecutorService interface in Java that provides a customizable thread pool for executing tasks asynchronously.
+
+ThreadPoolExecutor allows you to configure various parameters such as the core pool size, maximum pool size, keep-alive time, and work queue, which gives you fine-grained control over the behavior of the thread pool.
+
+ThreadPoolExecutor also provides hooks for extending and customizing its behavior, such as implementing custom thread factories or rejection handlers.
+
+ThreadPoolExecutor is widely used in Java applications for executing concurrent tasks efficiently and managing resources effectively.
+
+In summary, thread pools and executors provide a powerful and flexible framework for concurrent programming in Java, allowing you to execute tasks asynchronously and efficiently manage threads and resources. The ThreadPoolExecutor class is a key component of this framework, providing a customizable thread pool implementation.
+
+
+11. DI with example
+	Dependency Injection (DI) is a design pattern in which objects are given their dependencies rather than creating or looking for them on their own. This helps in achieving loose coupling between classes and facilitates easier testing and maintenance of code. In Java, DI is commonly implemented using frameworks like Spring.
+
+Let's illustrate Dependency Injection with an example:
+
+Suppose we have a simple application that consists of two classes: UserService and UserRepository.
+
+java
+Copy code
+public class UserRepository {
+    public void save(User user) {
+        // Logic to save user to the database
+        System.out.println("User saved to the database: " + user);
+    }
+}
+
+public class UserService {
+    private UserRepository userRepository;
+
+    public UserService() {
+        this.userRepository = new UserRepository(); // Dependency created internally
+    }
+
+    public void createUser(String username) {
+        User user = new User(username);
+        userRepository.save(user);
+    }
+}
+In this example, the UserService class is dependent on the UserRepository class to save user data to the database. However, it creates an instance of UserRepository internally using the new keyword, which tightly couples UserService to UserRepository. This makes it difficult to replace or mock UserRepository for testing purposes.
+
+Now, let's refactor the code to use Dependency Injection:
+
+java
+Copy code
+public class UserRepository {
+    public void save(User user) {
+        // Logic to save user to the database
+        System.out.println("User saved to the database: " + user);
+    }
+}
+
+public class UserService {
+    private UserRepository userRepository;
+
+    // Constructor Injection
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
+    public void createUser(String username) {
+        User user = new User(username);
+        userRepository.save(user);
+    }
+}
+In this refactored version, the UserService class no longer creates an instance of UserRepository internally. Instead, it receives a UserRepository object through its constructor. This is known as constructor injection.
+
+Now, let's see how we can use Dependency Injection to wire up these classes using a framework like Spring:
+
+java
+Copy code
+@Configuration
+public class AppConfig {
+    @Bean
+    public UserRepository userRepository() {
+        return new UserRepository();
+    }
+
+    @Bean
+    public UserService userService(UserRepository userRepository) {
+        return new UserService(userRepository);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        ApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
+        UserService userService = context.getBean(UserService.class);
+        userService.createUser("john.doe");
+    }
+}
+In this example, we define a configuration class AppConfig where we declare beans for UserRepository and UserService. We annotate the configuration class with @Configuration to indicate that it contains bean definitions. We also annotate the userRepository() method with @Bean to declare it as a bean. In the userService() method, we use constructor injection to inject the UserRepository bean into the UserService bean.
+
+In the Main class, we create an ApplicationContext using AnnotationConfigApplicationContext and pass AppConfig.class as an argument. Then, we retrieve the UserService bean from the context and call the createUser() method.
+
+This way, Spring takes care of creating and wiring up the dependencies for us, following the principles of Dependency Injection. This makes our code more modular, testable, and maintainable.
+
+
+12. How spring know which bean to autowire. 
+Spring uses various mechanisms to determine which bean to autowire when you use @Autowired annotation or XML-based configuration.
+
+Type-based Autowiring (Default):
+
+If you use @Autowired without specifying any additional parameters, Spring will attempt to find a bean of the same type as the member variable or parameter where @Autowired is applied. If there is exactly one bean of that type in the application context, Spring will automatically inject it. If there are multiple beans of the same type, Spring will throw an exception, unless you specify additional qualifiers or use other mechanisms like @Primary.
+
+java
+Copy code
+@Autowired
+private UserRepository userRepository;
+Name-based Autowiring:
+
+You can also specify the name of the bean to be autowired using @Qualifier annotation. Spring will then search for a bean with the specified name and inject it.
+
+java
+Copy code
+@Autowired
+@Qualifier("userRepository")
+private UserRepository myUserRepository;
+Constructor Autowiring:
+
+Constructor autowiring is also supported in Spring, where Spring automatically tries to match constructor arguments with beans in the context. If there is a single bean of the required type, it will be injected into the constructor.
+
+java
+Copy code
+@Autowired
+public UserService(UserRepository userRepository) {
+    this.userRepository = userRepository;
+}
+Primary Bean:
+
+You can mark one of the beans as primary using the @Primary annotation. If there are multiple beans of the same type and none are marked as primary, Spring will throw an exception. If one bean is marked as primary, Spring will use it for autowiring unless a specific qualifier is specified.
+
+java
+Copy code
+@Component
+@Primary
+public class PrimaryUserRepository implements UserRepository {
+    // Implementation
+}
+Qualifiers:
+
+Qualifiers allow you to specify more fine-grained control over which bean should be injected. You can use @Qualifier along with @Autowired to specify a qualifier value.
+
+java
+Copy code
+@Autowired
+@Qualifier("userRepository")
+private UserRepository myUserRepository;
+Annotation-based Autowiring:
+
+You can create custom annotations and use them along with @Autowired to specify specific beans for autowiring based on the annotation.
+
+java
+Copy code
+@Autowired
+@UserRepositoryQualifier
+private UserRepository myUserRepository;
+These are some of the mechanisms Spring uses to determine which bean to autowire. You can choose the appropriate mechanism based on your application's requirements and architecture.
+
+
+13. @Primary
+14. What is the top most hirearchy in Exception. 
+15. what is solid principal and how you have implemented in project. (Singleton)
+16. write the singleton principal. sharing screen. 
+17. class level or object level synchronized ?
+18. How java deserialize an object. Role of Serial version UID
+	Now, let's discuss the role of serialVersionUID in the deserialization process:
+
+SerialVersionUID (UID): The serialVersionUID is a unique identifier for a serializable class. It serves as a version control mechanism to ensure that the serialized and deserialized objects are compatible. If the serialVersionUID of a serialized object matches the serialVersionUID of the class during deserialization, Java allows the deserialization to proceed. However, if the serialVersionUID values do not match, Java may throw an InvalidClassException, indicating that the class definitions are incompatible.
+
+Role in Deserialization: During deserialization, Java reads the serialVersionUID from the serialized byte stream and compares it with the serialVersionUID of the class definition. If the values match, Java allows the deserialization to proceed. If they do not match, Java may reject the deserialization attempt, depending on the serialization compatibility rules.
+
+In summary, serialVersionUID plays a crucial role in the deserialization process by ensuring compatibility between serialized and deserialized objects. It allows Java to detect changes in the class definition that may affect the serialized form of the object and prevent deserialization if compatibility issues are detected.
+
+
+19. In hashmap I have override the hashcode and equals method and returning 1 in hashcode method. I have 5 employees. what will be the size of the map?
+	If you override the hashCode() method of the objects being used as keys in a HashMap to always return the same value, such as 1 in your case, and you also override the equals() method accordingly, then all objects will be placed in the same bucket of the HashMap.
+
+In a HashMap, the size refers to the number of key-value mappings in the map, not the number of buckets. However, in this scenario, since all objects are placed in the same bucket due to their hash codes being the same, the size of the map will be 1, as only one entry will be stored in the HashMap, regardless of the number of objects you add.
+
+Here's a simple illustration:
+
+java
+Copy code
+class Employee {
+    private int id;
+    private String name;
+
+    // Constructor, getters, setters
+
+    @Override
+    public int hashCode() {
+        return 1; // Always return the same hash code
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Employee employee = (Employee) obj;
+        return id == employee.id && Objects.equals(name, employee.name);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Map<Employee, String> map = new HashMap<>();
+        Employee emp1 = new Employee(1, "John");
+        Employee emp2 = new Employee(2, "Jane");
+        Employee emp3 = new Employee(3, "Alice");
+        Employee emp4 = new Employee(4, "Bob");
+        Employee emp5 = new Employee(5, "Charlie");
+
+        map.put(emp1, "Engineer");
+        map.put(emp2, "Manager");
+        map.put(emp3, "Developer");
+        map.put(emp4, "Analyst");
+        map.put(emp5, "Designer");
+
+        System.out.println("Size of the map: " + map.size()); // Output: Size of the map: 1
+    }
+}
+In this example, even though we add 5 entries to the map, they all end up in the same bucket due to the overridden hashCode() method always returning 1. Therefore, the size of the map will be 1.
+
+
+20. print the multiple of 5 using java8
+	import java.util.stream.IntStream;
+
+public class Main {
+    public static void main(String[] args) {
+        // Create a stream of integers from 1 to 100
+        IntStream.rangeClosed(1, 100)
+                 // Filter out numbers that are not multiples of 5
+                 .filter(num -> num % 5 == 0)
+                 // Print each multiple of 5
+                 .forEach(System.out::println);
+    }
+}
+This code snippet will print all multiples of 5 between 1 and 100. The rangeClosed() method creates a stream of integers from 1 to 100 (inclusive). The filter() method filters out numbers that are not multiples of 5 using the modulo operator (%). Finally, the forEach() method is used to print each multiple of 5.
+
+
+
+
+
+
+21. String is given count occurence of i using java8
+22. parent class is not throwing any exception but child class is throwing null pointer exception will it complie?
+	In Java, if a parent class method does not declare any checked exceptions, but a child class method overrides it and declares a checked exception, it will not compile unless the checked exception declared in the child class method is a subtype of the checked exception declared in the parent class method.
+
+However, regarding unchecked exceptions like NullPointerException, the situation is different. Since NullPointerException is an unchecked exception, it doesn't need to be declared in the method signature, neither in the parent class nor in the child class. Therefore, the situation you described should not cause a compilation error due to the NullPointerException.
+
+Consider the following example:
+
+java
+Copy code
+class Parent {
+    void method() {
+        // Parent class method does not throw any exception
+    }
+}
+
+class Child extends Parent {
+    @Override
+    void method() throws NullPointerException {
+        // Child class method throws NullPointerException
+        throw new NullPointerException("This is a NullPointerException");
+    }
+}
+In this example, the child class method method() overrides the parent class method method() and declares that it throws a NullPointerException. This code will compile without any issues.
+
+However, note that while it compiles, it's generally not considered good practice to declare unchecked exceptions in method signatures, as it can lead to confusion for the caller. Unchecked exceptions are typically handled using proper null checks and defensive programming techniques within the method implementation, rather than being declared in method signatures.
+
+
+23. which is stronger in has-a relationship. 
+24. any example code in aggregation and composition. 
+	Aggregation:
+Aggregation represents a "has-a" relationship between two classes, where one class contains a reference to another class, but the contained class can exist independently of the container class.
+
+java
+Copy code
+class Address {
+    private String street;
+    private String city;
+    private String state;
+    private String zipCode;
+
+    // Constructor, getters, setters
+}
+
+class Employee {
+    private String name;
+    private int employeeId;
+    private Address address; // Aggregation
+
+    // Constructor, getters, setters
+}
+In this example, an Employee class has an Address, but an Address can exist independently of an Employee. This is an example of aggregation.
+
+Composition:
+Composition represents a stronger form of ownership between two classes, where one class contains an instance of another class and the contained class cannot exist without the container class.
+
+java
+Copy code
+class Engine {
+    private String type;
+
+    // Constructor, getters, setters
+}
+
+class Car {
+    private String model;
+    private Engine engine; // Composition
+
+    public Car(String model, String engineType) {
+        this.model = model;
+        this.engine = new Engine(engineType);
+    }
+
+    // Getters
+}
+In this example, a Car contains an Engine, and a Car owns the Engine instance. Without a Car, there cannot be an Engine. This is an example of composition.
+
+To summarize:
+
+Aggregation implies a "has-a" relationship where the contained object can exist independently.
+Composition implies a stronger form of ownership where the contained object cannot exist without the container object.
+
+
+25. given String "1234" tell me this is consecutive no. 
+26. How to remove empty strings from String Array
+27. Reverse the array. 
+28. weakhashmap, identity hashmap
+	
+WeakHashMap and IdentityHashMap are both implementations of the Map interface in Java, but they have different behaviors and use cases:
+
+WeakHashMap:
+
+WeakHashMap is an implementation of the Map interface that uses weak references for its keys. This means that if the only reference to a key in a WeakHashMap is a weak reference, the key can be garbage collected even if the map still contains the key-value mapping.
+
+This behavior is useful in scenarios where you want to associate additional data with objects that are already managed by a garbage collector. For example, you might use WeakHashMap to associate metadata with objects in a cache, where you don't want the metadata to prevent the objects themselves from being garbage collected when they are no longer in use.
+
+Since weak references are used for keys, the entries in a WeakHashMap may disappear at any time when the corresponding keys are garbage collected. Therefore, WeakHashMap is not suitable for use cases where strong, stable mappings are required.
+
+IdentityHashMap:
+
+IdentityHashMap is an implementation of the Map interface that uses reference-equality in place of object-equality when comparing keys (i.e., it uses == instead of equals()). In other words, two keys are considered equal in an IdentityHashMap if and only if they reference the same object.
+
+This behavior is useful when you need to maintain separate entries for objects that are equal according to their equals() method but are distinct according to their identity. For example, you might use IdentityHashMap when working with keys that are interned strings or when you need to distinguish between different instances of a class with overridden equals() method.
+
+Unlike WeakHashMap, IdentityHashMap does not use weak references and does not affect garbage collection. Entries in an IdentityHashMap are retained as long as they are reachable.
+
+In summary, WeakHashMap is used when you want to associate additional data with objects while allowing the objects themselves to be garbage collected, whereas IdentityHashMap is used when you need to maintain separate entries for objects with the same content but different identities.
+
+
+29. Advantages of DI
+	Dependency Injection (DI) offers several advantages in software development:
+
+Decoupling: DI decouples the dependencies between classes, allowing for more modular and flexible code. Classes no longer need to directly instantiate their dependencies, reducing the tight coupling between them. This makes it easier to change or swap out dependencies without modifying the classes themselves.
+
+Testability: DI makes it easier to unit test classes by allowing dependencies to be mocked or replaced with test doubles. By injecting mock objects or stubs during testing, developers can isolate the behavior of individual classes and verify their functionality in isolation.
+
+Reusability: DI promotes the reuse of components and services across different parts of an application. Since dependencies are injected from external sources, they can be reused in multiple classes or modules without duplicating code. This helps to maintain consistency and reduce code duplication.
+
+Scalability: DI facilitates the scalability of applications by promoting a modular and loosely coupled architecture. As the application grows, new components and services can be added easily without affecting existing code. Additionally, DI frameworks often provide features such as configuration management and lifecycle management, which help to manage complex dependencies in large-scale applications.
+
+Readability and Maintainability: DI can improve the readability and maintainability of code by making the dependencies between classes explicit. By clearly defining dependencies through constructor injection or method injection, developers can easily understand the relationships between different components of the system. This makes it easier to debug, refactor, and maintain the codebase over time.
+
+Promotes Design Patterns: DI encourages the use of design patterns such as Inversion of Control (IoC) and Dependency Inversion Principle (DIP), which promote loose coupling and high cohesion in software design. By adhering to these principles, developers can create more modular, reusable, and maintainable code.
+
+Overall, Dependency Injection offers numerous benefits in terms of decoupling, testability, reusability, scalability, readability, and maintainability, making it a valuable technique in modern software development practices.
+
+
+30. Advantages of NoSQL over SQL
+31. what is bean
+32. diff b/w normal bean and spring bean. 
+	
+The term "bean" can refer to two different concepts in the context of Java programming:
+
+Normal Bean:
+
+A normal bean, in general Java programming, simply refers to a Java object or instance of a class. It follows the Plain Old Java Object (POJO) programming model, meaning it is a simple Java object without any dependencies on external frameworks or libraries.
+
+Normal beans are not managed by any specific framework or container and are typically created and used directly within the application code.
+
+Normal beans can be instantiated using the new keyword or any other means of object creation available in Java.
+
+Spring Bean:
+
+A Spring bean refers to a Java object that is managed by the Spring IoC (Inversion of Control) container.
+
+Spring beans are configured and managed by the Spring framework. They are typically defined in Spring configuration files (e.g., XML files or Java configuration classes) or using annotations (e.g., @Component, @Service, @Repository, etc.).
+
+Spring beans follow the POJO programming model and are not required to implement any Spring-specific interfaces or extend any Spring-specific classes.
+
+Spring beans can benefit from features provided by the Spring framework, such as dependency injection, lifecycle management, aspect-oriented programming (AOP), declarative transaction management, and more.
+
+Spring beans are often singleton instances by default, but they can be configured to have different scopes, such as prototype (new instance per request), request, session, or custom scoped.
+
+In summary, while both normal beans and Spring beans are Java objects, the key difference lies in their management and configuration. Normal beans are general Java objects used directly within application code, while Spring beans are Java objects managed by the Spring IoC container, configured using Spring-specific mechanisms, and benefiting from features provided by the Spring framework.
+
+
+33. How you secure your web services (with token headers - serial version)
+34. @Component , @Service, @Repository
+35. benifits of DAO layer
+	The Data Access Object (DAO) design pattern provides several benefits in software development, particularly in applications that interact with databases or other data sources:
+
+Separation of Concerns: DAO layer separates the concerns of data access and manipulation from the rest of the application logic. This promotes a clean and modular architecture where data access code is isolated and can be modified independently of other components.
+
+Encapsulation of Data Access Logic: DAO encapsulates all database-specific code and queries within dedicated classes or methods. This helps to centralize and organize data access logic, making it easier to understand, maintain, and reuse across different parts of the application.
+
+Promotes Code Reusability: By encapsulating data access logic within DAO classes, developers can reuse the same data access methods across different parts of the application. This reduces code duplication and promotes consistency in data access operations.
+
+Facilitates Unit Testing: DAO layer facilitates unit testing by providing clear boundaries between data access code and business logic. Mock or stub implementations of DAO interfaces can be used during testing to isolate and test individual components independently of the underlying data source.
+
+Enhances Maintainability: DAO layer enhances the maintainability of the application by abstracting away the details of data access mechanisms. Changes to the underlying data source (e.g., switching from one database provider to another) can be implemented within the DAO layer without affecting other parts of the application.
+
+Supports Transaction Management: DAO layer can support transaction management by encapsulating transactional logic within data access methods. This allows developers to define transaction boundaries explicitly and ensures data integrity in multi-step operations.
+
+Improves Security: DAO layer can help improve security by enforcing access control policies and sanitizing input parameters before executing database queries. By centralizing data access logic, security measures can be implemented consistently across the application.
+
+Facilitates Scalability: DAO layer facilitates scalability by providing a clear separation between data access code and business logic. As the application grows and evolves, developers can optimize and scale the data access layer independently of other components.
+
+In summary, the DAO layer provides numerous benefits in terms of separation of concerns, encapsulation, reusability, testability, maintainability, transaction management, security, and scalability. It is a fundamental part of many software architectures, particularly in enterprise applications that interact with complex data sources.
+
+
+
+
+
+
+36. How can you measure your DB performance
+37. how to handle exception in spring
+38. git rebase
+39. what is lambda expression
+40. hashcode and equals contrace
+41. how concurrentHashMap work internally
+42. how to convert list to Set/map
+44. 

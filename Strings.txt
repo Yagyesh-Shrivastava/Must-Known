@@ -1,0 +1,194 @@
+Strings
+1. Determine if two strings are an anagram
+	import java.util.HashMap;
+import java.util.Map;
+
+public class AnagramChecker {
+    public static boolean areAnagrams(String str1, String str2) {
+        // Remove spaces and convert to lowercase for case-insensitive comparison
+        str1 = str1.replaceAll("\\s", "").toLowerCase();
+        str2 = str2.replaceAll("\\s", "").toLowerCase();
+
+        // If lengths are different, they can't be anagrams
+        if (str1.length() != str2.length()) {
+            return false;
+        }
+
+        // Count the frequency of each character in both strings
+        Map<Character, Integer> countStr1 = new HashMap<>();
+        Map<Character, Integer> countStr2 = new HashMap<>();
+        for (char c : str1.toCharArray()) {
+            countStr1.put(c, countStr1.getOrDefault(c, 0) + 1);
+        }
+        for (char c : str2.toCharArray()) {
+            countStr2.put(c, countStr2.getOrDefault(c, 0) + 1);
+        }
+
+        // Compare the character frequencies
+        return countStr1.equals(countStr2);
+    }
+
+    public static void main(String[] args) {
+        String string1 = "listen";
+        String string2 = "silent";
+        if (areAnagrams(string1, string2)) {
+            System.out.println("The strings are anagrams.");
+        } else {
+            System.out.println("The strings are not anagrams.");
+        }
+    }
+}
+
+
+	
+2. Find the missing letters from a string if it doesn’t create a pangram.
+	public static void main(String[] args) {
+        String str = "The quick brown fox jumps over the dog";
+        HashSet<Character> presentChars = new HashSet<>();
+ 
+        // add each character to the set
+        for(int i = 0; i < str.length(); i++){
+            char c = str.charAt(i);
+            if (c >= 'a' && c <= 'z'){
+                presentChars.add(c);
+            }
+            else if (c >= 'A' && c <= 'Z'){
+                presentChars.add(Character.toLowerCase(c));
+            }
+        }
+ 
+        // check which characters are missing
+        StringBuilder missingChars = new StringBuilder();
+        for(char c = 'a'; c <= 'z'; c++){
+            if(!presentChars.contains(c)){
+                missingChars.append(c);
+            }
+        }
+ 
+        // print the missing characters
+        if(missingChars.length() == 0){
+            System.out.println("The string is a pangram.");
+        }
+        else{
+            System.out.println(missingChars);
+        }
+    }
+
+----------------------------------------------------------
+Arrays
+
+An integer is self-descriptive if it has the property that, when digit positions are N-1, the digit in each position is equal to the number of times that this digit appears in the number. Write a function that will check whether a given positive integer is self-descriptive.
+
+Implement a solution nth_largest (array, n) that takes in an array of arbitrary size and returns the nth largest element.
+public class Solution {
+    public int findKthLargest(int[] nums, int k) {
+        Arrays.sort(nums);
+        return nums[nums.length - k];
+    }
+}
+
+
+Linked List
+Write an algorithm to find the mid element in the linked list.
+	class Node {
+    public int data;
+    public Node next;
+}
+ 
+class NodeOperation {
+  // Function to add a new node
+    public void pushNode(Node[] headRef, int dataVal) {
+      // Allocate node
+        Node newNode = new Node();
+      // Put in the data
+        newNode.data = dataVal;
+      // Link the old list of the new node
+        newNode.next = headRef[0];
+      // move the head to point to the new node
+        headRef[0] = newNode;
+    }
+}
+//Driver code
+public class Main {
+    public static void main(String[] args) {
+        Node[] head = new Node[1];
+        NodeOperation temp = new NodeOperation();
+        for (int i = 5; i > 0; i--) {
+            temp.pushNode(head, i);
+        }
+        ArrayList<Integer> v = new ArrayList<Integer>();
+        Node curr = head[0];
+        while (curr != null) {
+            v.add(curr.data);
+            curr = curr.next;
+        }
+        System.out.print("Middle Value Of Linked List is : ");
+        System.out.println(v.get(v.size() / 2));
+    }
+}
+
+
+Binary tree
+Given a binary tree, print the left view of the binary tree.
+Graphs
+Given a graph with V vertices and E edges, determine if the graph contains a cycle or not.
+Recursion
+Write an algorithm to find the nth Fibonacci number where n < = 30.
+	public class fibonacci {
+    static int fib(int n)
+    {
+        int a = 0, b = 1, c;
+        if (n == 0)
+            return a;
+        for (int i = 2; i <= n; i++) {
+            c = a + b;
+            a = b;
+            b = c;
+        }
+        return b;
+    }
+ 
+    public static void main(String args[])
+    {
+        int n = 9;
+        System.out.println(fib(n));
+    }
+};
+
+
+Sort
+Merge overlapping intervals given ‘N’ number of intervals, where each interval contains two integers denoting the boundaries of the interval.
+
+
+
+Minimum Swaps to Make Strings Equal
+
+public class Main {
+    public static void main(String[] args) {
+        String s1 = "xy";
+        String s2 = "yx";
+        
+        int minSwaps = minSwapsToMakeStringsEqual(s1, s2);
+        System.out.println("Minimum swaps required: " + minSwaps);
+    }
+    
+    public static int minSwapsToMakeStringsEqual(String s1, String s2) {
+        if (s1.length() != s2.length()) {
+            return -1; // Strings have different lengths
+        }
+        
+        int mismatches = 0;
+        for (int i = 0; i < s1.length(); i++) {
+            if (s1.charAt(i) != s2.charAt(i)) {
+                mismatches++;
+            }
+        }
+        
+        if (mismatches % 2 != 0) {
+            return -1; // Odd number of mismatches, not possible to make strings equal
+        }
+        
+        // Return the number of pairs of mismatches
+        return mismatches / 2;
+    }
+}
